@@ -55,7 +55,7 @@
           </el-submenu>
         </el-menu>
       </el-aside>
-      <!-- -->
+      <!-- 右侧内容 -->
       <el-container>
         <el-main>
               <router-view></router-view>          
@@ -83,7 +83,7 @@ export default {
       const { data: res } = await this.$http.get('menus')
       if(res.meta.status !==200) return this.$message.error(res.meta.msg);
       this.menuList = res.data;
-      console.log(res.data);
+      console.log('菜单列表：',res.data);
     },
     //点击按钮，切换菜单的折叠与展开
     toggleCollapse(){

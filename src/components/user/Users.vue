@@ -3,9 +3,8 @@
     <!-- 面包屑导航区 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>活动管理</el-breadcrumb-item>
-      <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-      <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+      <el-breadcrumb-item>用户管理</el-breadcrumb-item>
+      <el-breadcrumb-item>用户列表</el-breadcrumb-item>
     </el-breadcrumb>
     <!-- 卡片视图区域 -->
     <el-card>
@@ -106,6 +105,7 @@
                 type="warning"
                 icon="el-icon-setting"
                 size="mini"
+                @click="setRole(scope.row)"
               ></el-button>
             </el-tooltip>
           </template>
@@ -192,6 +192,37 @@
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="editUserBtn">确 定</el-button>
         <el-button @click="editUserdialogVisible = false">取 消</el-button>
+      </span>
+    </el-dialog>
+    
+    <!-- 分配角色的对话框 -->
+    <el-dialog
+      title="分配角色"
+      :visible.sync="setRoleDialogVisible"
+      width="50%"
+      @close="setRoleDialogClosed"
+    >
+      <div>
+        <p>当前的用户：{{ userInfo.username }}</p>
+        <p>当前的角色：{{ userInfo.role_name }}</p>
+        <p>
+          分配新角色：
+          <el-select v-model="selectRoleId" placeholder="请选择">
+            <el-option
+              v-for="role in rolesList"
+              :key="role.id"
+              :label="role.roleName"
+              :value="role.id"
+            >
+            </el-option>
+          </el-select>
+        </p>
+      </div>
+      <span slot="footer">
+        <el-button @click="setRoleDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveRoleBtn"
+          >确 定</el-button
+        >
       </span>
     </el-dialog>
   </div>
@@ -333,6 +364,14 @@ export default {
           },
         ],
       },
+      //控制分配角色的对话框的显示和隐藏
+      setRoleDialogVisible: false,
+      //需要被分配角色的用户信息
+      userInfo: [],
+      //所有的角色数据列表
+      rolesList: [],
+      //被选中的角色id值
+      selectRoleId:'',
     }
   },
   methods: {
@@ -344,7 +383,6 @@ export default {
       if (res.meta.status !== 200)
         return this.$message.error('获取用户信息失败！')
       console.log(res)
-      debugger
       this.userList = res.data.users
       this.total = res.data.total
     },
@@ -465,7 +503,6 @@ export default {
       //此时已经实现删除操作，所以total的值需要减1，Math.ceil是向上取整，保证始终大于等于1
 
       // 6条数据   5条1页  删除最后1条
-      debugger
       // 根据总的数据条数total和一页显示的数据条数，得到总页数
       let lastPage = Math.ceil(this.total / this.queryInfo.pagesize)
       // 判断当前页是否是最后一页 是的话自减1页，然后发送请求获取数据
@@ -473,6 +510,36 @@ export default {
       //重新获取数据
       this.getUserList()
     },
+
+    //展示分配角色的对话框
+    async setRole(userInfo) {
+      this.userInfo = userInfo
+      //在展示框显示之前，获取所有的角色列表
+      const { data: res } = await this.$http.get('roles')
+      if (res.meta.status !== 200)
+        return this.$message.error('获取角色列表失败')
+      this.rolesList = res.data
+      this.setRoleDialogVisible = true
+    },
+    //点击按钮，分配角色
+    async saveRoleBtn(){
+      if(!this.selectRoleId) this.$message.error('请分配一个角色');
+      //发送请求，设置用户对应的角色
+      const{data:res} = await this.$http.put(`users/${this.userInfo.id}/role`,{
+        rid:this.selectRoleId
+      })
+      if(res.meta.status!==200) return this.$message.error('更新角色失败')
+      //响应成功
+      this.$message.success('更新角色成功');
+      this.getUserList();
+      this.setRoleDialogVisible=false;
+    },
+    //关闭分配角色的对话框的关闭事件
+    setRoleDialogClosed(){
+      //选择的角色id重置，存放角色的数组重置
+      this.selectRoleId='';
+      this.rolesList = [];
+    }
   },
 }
 </script>

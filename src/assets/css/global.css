@@ -4,3 +4,20 @@ html,body,#app{
     margin: 0;
     padding: 0;
 }
+/* 设置 面包屑导航栏 */
+.el-breadcrumb{
+   margin-bottom: 15px;
+   font-size:12px;
+}
+/* 设置 卡片  */
+.el-card{
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25) !important;
+}
+/* 设置表格 */
+.el-table {
+    margin-top: 15px;
+}
+/* 设置分页 */
+.el-pagination{
+    margin-top: 15px;
+}

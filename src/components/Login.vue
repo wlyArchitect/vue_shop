@@ -32,11 +32,9 @@
         <el-form-item class="btns">
           <!-- 传入ref的名字 -->
           <el-button type="primary" @click="submitForm('loginForm')"
-            >登录</el-button
-          >
+            >登录</el-button>
           <el-button type="info" @click="resetForm('loginForm')"
-            >重置</el-button
-          >
+            >重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -71,8 +69,10 @@ export default {
   },
   methods: {
     submitForm(formName) {
-      this.$refs[formName].validate(async (valid) => {
+      this.$refs[formName].validate(async (valid,object) => {  //对整个表单进行校验的方法,valid表示是否验证成功
         //回调的箭头函数
+        console.log(valid,"true表示验证成功");
+        console.log(object,"未验证成功的字段");
         if (!valid) return;
         //返回结果如果是promise  await简化操作，只能用于async修饰的方法中
         // const result = await this.$http.post('login',this.loginForm);

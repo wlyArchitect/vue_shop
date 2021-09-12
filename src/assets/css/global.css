@@ -22,3 +22,13 @@ html,body,#app{
 .el-pagination{
     margin-top: 15px;
 }
+/*  解决级联选择器供选择的列表太长 */
+.el-cascader-menu {
+    height: 300px;
+}
+/* 更改MessageBox弹框的确定和取消位置 */
+/* 设置取消按钮向右浮动，左magin为10px，即与确定按钮间距为10px */
+.btn-custom-cancel {
+    float: right;
+    margin-left: 10px;
+}

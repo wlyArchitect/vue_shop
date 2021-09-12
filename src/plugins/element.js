@@ -28,7 +28,8 @@ import {
     Tag,
     Tree,
     Select,
-    Option
+    Option,
+    Cascader,
 } from 'element-ui'
 
 Vue.use(Button)
@@ -57,9 +58,12 @@ Vue.use(Tag)
 Vue.use(Tree)
 Vue.use(Select)
 Vue.use(Option)
+Vue.use(Cascader)
 
 //Message需要配置到Vue原型属性中
 Vue.prototype.$message = Message
 //MessageBox 不需要使用，直接Vue原型属性配置
 Vue.prototype.$confirm = MessageBox.confirm;
+Vue.prototype.$alert = MessageBox.alert;
+Vue.prototype.$prompt = MessageBox.prompt;
 

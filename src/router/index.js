@@ -7,11 +7,12 @@ import Welcome from '../components/Welcome.vue'
 import Users from '../components/user/Users.vue'
 import Rights from '../components/power/Rights.vue'
 import Roles from '../components/power/Roles.vue'
+import Category from '../components/goods/Category.vue'
 
 Vue.use(VueRouter)
 
 const router = new VueRouter({
-  model:'hash', //hash兼容性好,带/#/    history带/,兼容性略差
+  mode:'hash', //hash兼容性好,带/#/    history带/,兼容性略差
   routes:[
     { name: 'index', path: '/', redirect: '/login' },
     { name: 'login', path: '/login', component: Login },
@@ -31,6 +32,7 @@ const router = new VueRouter({
            path:'/users',
            component:Users
          },
+         //权限管理模块： 权限 角色
          {
            name:'rights',
            path:'/rights',
@@ -40,6 +42,12 @@ const router = new VueRouter({
            name:'roles',
            path:'/roles',
            component:Roles
+         },
+         //商品管理模块：商品分类 
+         {
+           name:'Category',
+           path:'/categories',
+           component:Category
          }
       ]
     }

@@ -92,6 +92,8 @@
           <!-- options 用来指定数据源 -->
           <!-- props 用来指定配置对象 -->
           <!-- v-model 必须绑定一个数组 -->
+          <!-- clearable 可以清空输入的内容 -->
+          <!-- change-on-select 可以选择父节点 -->
           <el-cascader
             expand-trigger="hover"
             :options="parentCateList"

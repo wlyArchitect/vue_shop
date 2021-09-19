@@ -1,4 +1,4 @@
-/** 全局样式表 */
+/* 全局样式表 */
 html,body,#app{
     height: 100%;
     margin: 0;
@@ -29,6 +29,18 @@ html,body,#app{
 /* 更改MessageBox弹框的确定和取消位置 */
 /* 设置取消按钮向右浮动，左magin为10px，即与确定按钮间距为10px */
 .btn-custom-cancel {
-    float: right;
-    margin-left: 10px;
+    float: right ;
+    margin-left: 10px ;
+}
+/* 设置步骤条 */
+.el-steps{
+    margin:15px 0;
+}
+/* 设置步骤条的每项 */
+.el-step__title{
+   font-size: 13px;
+}
+/* 设置引入的组件quill-editor富文本编辑器 */
+.ql-editor{
+    min-height: 300px;
 }

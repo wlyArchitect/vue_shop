@@ -3,7 +3,7 @@
     <!-- 头部区域 -->
     <el-header>
       <div>
-        <img src="../assets/heima.png" alt="" />
+        <img src="../assets/heima.png" alt="这是一个logo图片" />
         <span>电商后台管理系统</span>
       </div>
       <el-button type="info" @click="logout()">退出</el-button>
@@ -13,7 +13,7 @@
       <!-- 侧边栏
            动态设置侧边栏的大小
        -->
-      <el-aside :width="isCollapce?'64px':'200px'">
+      <el-aside :width="isCollapce ? '64px' : '200px'">
         <!-- 菜单的切换与展开 -->
         <div class="toggle-button" @click="toggleCollapse">|||</div>
         <!-- 侧边栏菜单区域
@@ -34,23 +34,27 @@
           :default-active="activePath"
         >
           <!-- 一级菜单 -->
-          <el-submenu :index="item.id+''" v-for="item in menuList" :key="item.id">
+          <el-submenu
+            :index="item.id + ''"
+            v-for="item in menuList"
+            :key="item.id"
+          >
             <!-- 一级菜单的模板区域 -->
             <template slot="title">
               <!-- 图标 -->
               <i :class="iconObj[item.id]"></i>
               <!-- 文本 -->
-              <span>{{item.authName}}</span>
+              <span>{{ item.authName }}</span>
             </template>
             <!-- 二级菜单 -->
-            <el-menu-item 
-            :index="'/'+subItem.path" 
-            v-for="subItem in item.children" 
-            :key="subItem.id"
-            @click="saveNative('/'+subItem.path)"
+            <el-menu-item
+              :index="'/' + subItem.path"
+              v-for="subItem in item.children"
+              :key="subItem.id"
+              @click="saveNative('/' + subItem.path)"
             >
               <i class="el-icon-menu"></i>
-              {{subItem.authName}}
+              {{ subItem.authName }}
             </el-menu-item>
           </el-submenu>
         </el-menu>
@@ -58,7 +62,7 @@
       <!-- 右侧内容 -->
       <el-container>
         <el-main>
-              <router-view></router-view>          
+          <router-view></router-view>
         </el-main>
       </el-container>
     </el-container>
@@ -70,8 +74,8 @@ export default {
   name: 'Home',
   //创建dom等调用获取菜单的方法
   created() {
-    this.getMenuList();
-    this.activePath = window.sessionStorage.getItem('activePath');
+    this.getMenuList()
+    this.activePath = window.sessionStorage.getItem('activePath')
   },
   methods: {
     logout() {
@@ -81,34 +85,35 @@ export default {
     //由于返回值promise  解构赋值且最近方法async修饰
     async getMenuList() {
       const { data: res } = await this.$http.get('menus')
-      if(res.meta.status !==200) return this.$message.error(res.meta.msg);
-      this.menuList = res.data;
-      console.log('菜单列表：',res.data);
+      if (res.meta.status !== 200) return this.$message.error(res.meta.msg)
+      this.menuList = res.data
+      console.log('菜单列表：', res.data)
     },
     //点击按钮，切换菜单的折叠与展开
-    toggleCollapse(){
-         this.isCollapce = !this.isCollapce;
+    toggleCollapse() {
+      this.isCollapce = !this.isCollapce
     },
-    saveNative(path){
-       window.sessionStorage.setItem('activePath',path);
-       this.activePath = path;
-    }
+    //常亮对应的菜单地址
+    saveNative(path) {
+      window.sessionStorage.setItem('activePath', path)
+      this.activePath = path
+    },
   },
   data() {
     return {
       //左侧菜单数据
-      menuList:[],
+      menuList: [],
       //拿到一级菜单的id
-      iconObj:{
-        '125':'iconfont icon-user',
-        '103':'iconfont icon-tijikongjian',
-        '101':'iconfont icon-shangpin',
-        '102':'iconfont icon-danju',
-        '145':'iconfont icon-baobiao'
+      iconObj: {
+        125: 'iconfont icon-user',
+        103: 'iconfont icon-tijikongjian',
+        101: 'iconfont icon-shangpin',
+        102: 'iconfont icon-danju',
+        145: 'iconfont icon-baobiao',
       },
       //是否折叠
-      isCollapce:false,
-      activePath:'',
+      isCollapce: false,
+      activePath: '',
     }
   },
 }
@@ -141,17 +146,17 @@ export default {
 //侧边栏
 .el-aside {
   background-color: #333744;
-  .toggle-button{
-    background-color: #4A5064;
+  .toggle-button {
+    background-color: #4a5064;
     font-size: 10px;
     line-height: 20px;
-    color:#fff;
+    color: #fff;
     text-align: center;
-    letter-spacing: 0.2em;//设置|之间的间距
+    letter-spacing: 0.2em; //设置|之间的间距
     cursor: pointer;
   }
   //默认自带 border-right: solid 1px #e6e6e6;
-  .el-menu{
+  .el-menu {
     border-right: none;
   }
 }
@@ -159,7 +164,7 @@ export default {
   background-color: #eaedf1;
 }
 //设置图标与文本的间距
-.iconfont{
-   margin-right: 10px;
+.iconfont {
+  margin-right: 10px;
 }
 </style>

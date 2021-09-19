@@ -18,7 +18,7 @@
       >
       </el-alert>
 
-      <!-- 选择商品分类区域 
+      <!-- 选择商品分类区域
            clearable 清空输入的内容
       -->
       <el-row class="cat_opt" :gutter="10">
@@ -65,8 +65,8 @@
                 >
                   {{ item }}
                 </el-tag>
-                <!-- 
-                  输入的文本框 
+                <!--
+                  输入的文本框
                 -->
                 <el-input
                   class="input-new-tag"
@@ -130,8 +130,9 @@
                 >
                   {{ item }}
                 </el-tag>
-                <!-- 
-                  输入的文本框 
+                <!--
+                  输入的文本框
+                    @keyup.enter.native 键盘按下回车，但是vue2.0对于绑定原生事件必须native修饰
                 -->
                 <el-input
                   class="input-new-tag"
@@ -335,11 +336,12 @@ export default {
       //获取参数成功
       //进行一些处理
       res.data.forEach((item) => {
-        //将attr_vals属性的字符串转成数组 
+        //将attr_vals属性的字符串转成数组
         item.attr_vals =
+            //split(' ')将字符串按照 转成数组
             item.attr_vals.trim() == '' ? [] : item.attr_vals.split(' ')
         //控制文本框的输入和隐藏
-        item.inputVisible = false; 
+        item.inputVisible = false;
         //控制文本框输入的值
         item.inputValue = '';
       });
@@ -445,7 +447,7 @@ export default {
       this.$message.success('删除成功')
       this.getParamsData()
     },
-    
+
     //文本框失去焦点，或者按下回车enter
      handleInputConfirm(row){
       //输入内容无效，清空内容
@@ -469,6 +471,7 @@ export default {
       //-----让文本框自动获取焦点
       //$nextTick方法的作用，就是当页码上的元素被重新渲染以后，才会回调指定的函数
       this.$nextTick(_ => {
+         //todo 理解！
           this.$refs.saveTagInput.$refs.input.focus();
           console.log(this.$refs.saveTagInput);//表示一个组件
           console.log(this.$refs.saveTagInput.$refs.input);//拿到原生DOM input输入框
@@ -481,12 +484,13 @@ export default {
         //保存到数据库中
         this.saveAttrVals(row);
     },
-    //将对attr_vals的操作保存到数据库种
+    //将对attr_vals的操作保存到数据库中
     async saveAttrVals(row){
       //需要发送请求，保存这次操作
       const{data:res} = await this.$http.put(`categories/${this.cateId}/attributes/${row.attr_id}`,{
         attr_name:row.attr_name,
         attr_sel:row.attr_sel,
+        //join将数组转成字符串，按照 分割
         attr_vals:row.attr_vals.join(' '),
       })
       if(res.meta.status!==200) return this.$message.error('修改失败');

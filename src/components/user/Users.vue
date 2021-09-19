@@ -91,7 +91,7 @@
               type="danger"
               icon="el-icon-delete"
               size="mini"
-              @click="deleteUserById(scope.row.id)"
+              @click="deleteUserById(scope.row)"
               >删除</el-button
             >
             <!-- 设置文字提示  enterable:鼠标是否可进入到 tooltip提示 中 -->
@@ -124,7 +124,7 @@
       </el-pagination>
     </el-card>
 
-    <!-- 添加用户的对话框  
+    <!-- 添加用户的对话框
          :visible.sync  控制对话框的显示和隐藏
          :before-close
     -->
@@ -168,7 +168,7 @@
      修改用户的对话框
    -->
     <el-dialog
-      title="提示"
+      title="修改用户"
       :visible.sync="editUserdialogVisible"
       width="50%"
       @close="closeEditUserWin"
@@ -194,7 +194,7 @@
         <el-button @click="editUserdialogVisible = false">取 消</el-button>
       </span>
     </el-dialog>
-    
+
     <!-- 分配角色的对话框 -->
     <el-dialog
       title="分配角色"
@@ -219,10 +219,10 @@
         </p>
       </div>
       <span slot="footer">
-        <el-button @click="setRoleDialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="saveRoleBtn"
           >确 定</el-button
         >
+        <el-button @click="setRoleDialogVisible = false">取 消</el-button>
       </span>
     </el-dialog>
   </div>
@@ -479,14 +479,16 @@ export default {
       })
     },
     //删除用户
-    async deleteUserById(id) {
+    async deleteUserById(row) {
+      const id = row.id;
       const confirmResult = await this.$confirm(
-        '确定删除该用户, 是否继续?',
-        '提示',
+        `确定删除${row.username}用户, 是否继续?`,
+        '删除用户',
         {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning',
+          cancelButtonClass:'btn-custom-cancel',
         }
       ).catch((value) => {
         //cancel 取消

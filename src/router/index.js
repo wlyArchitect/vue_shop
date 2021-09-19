@@ -9,6 +9,9 @@ import Rights from '../components/power/Rights.vue'
 import Roles from '../components/power/Roles.vue'
 import Category from '../components/goods/Category.vue'
 import Params from '../components/goods/Params.vue'
+import GoodsList from '../components/goods/List.vue'
+import GoodsAdd from '../components/goods/Add.vue'
+import GoodsEdit from '../components/goods/Edit.vue'
 
 Vue.use(VueRouter)
 
@@ -18,7 +21,7 @@ const router = new VueRouter({
     { name: 'index', path: '/', redirect: '/login' },
     { name: 'login', path: '/login', component: Login },
     { name: 'home',
-      path: '/home', 
+      path: '/home',
       component: Home,
       //重定向到 /welcome
       redirect: '/welcome',
@@ -44,7 +47,7 @@ const router = new VueRouter({
            path:'/roles',
            component:Roles
          },
-         //商品管理模块：商品分类 
+         //商品管理模块：商品分类
          {
            name:'Category',
            path:'/categories',
@@ -54,7 +57,22 @@ const router = new VueRouter({
            name:'params',
            path:'/params',
            component: Params,
-         }
+         },
+         {
+           name:'goods',
+           path:'/goods',
+           component: GoodsList
+         },
+        {
+          name: 'goodsAdd',
+          path: '/goods/add',
+          component: GoodsAdd,
+        },
+        {
+          name: 'goodsEdit',
+          path: '/goods/edit',
+          component: GoodsEdit,
+        },
       ]
     }
   ]

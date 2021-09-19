@@ -381,7 +381,7 @@ export default {
       //进行删除操作
       const { data: res } = await this.$http.delete(`categories/${cat_id}`)
       if (res.meta.status !== 200) return this.$message.error('删除分类失败')
-      //删除成功
+      //删除成功：弹出提示并刷新列表数据
       this.$message.success('删除分类成功')
       this.getCateList()
     }
@@ -389,7 +389,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .treeTable {
   margin-top: 15px;
 }

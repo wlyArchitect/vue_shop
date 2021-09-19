@@ -76,6 +76,14 @@ Vue.use(CheckboxGroup)
 Vue.use(Checkbox)
 Vue.use(Upload)
 
+//导入时间线两个组件
+import Timeline from './timeline/index.js'
+import TimelineItem from './timeline-item/index.js'
+
+Vue.use(Timeline)
+Vue.use(TimelineItem)
+
+
 //Message需要配置到Vue原型属性中
 Vue.prototype.$message = Message
 //MessageBox 不需要使用，直接Vue原型属性配置
